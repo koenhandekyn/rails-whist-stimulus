@@ -1,0 +1,47 @@
+<%= form_with(model: round, local: true) do |form| %>
+  <% if round.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(round.errors.count, "error") %> prohibited this round from being saved:</h2>
+
+      <ul>
+      <% round.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :game_id %>
+    <%= form.text_field :game_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :s1 %>
+    <%= form.number_field :s1 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :s2 %>
+    <%= form.number_field :s2 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :s3 %>
+    <%= form.number_field :s3 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :s4 %>
+    <%= form.number_field :s4 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :roundtype %>
+    <%= form.number_field :roundtype %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
