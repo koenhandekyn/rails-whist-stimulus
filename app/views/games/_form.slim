@@ -1,0 +1,30 @@
+.container-fluid
+  = form_with model: @game, local: true do |f|
+    -if @game.errors.any?
+      #error_explanation
+        h2 = "#{pluralize(@game.errors.count, "error")} prohibited this game from being saved:"
+        ul
+          - @game.errors.full_messages.each do |msg|
+            li= msg
+
+    .form-row
+      .form-group.col
+        label Name
+        input.form-control type="text" value=@game.name name="game[name]"
+    .form-row
+      .form-group.col
+        label Player 1
+        input.form-control type="text" value=@game.player1 name="game[player1]"
+      .form-group.col
+        label Player 2
+        input.form-control type="text" value=@game.player2 name="game[player2]"
+      .form-group.col
+        label Player 3
+        input.form-control type="text" value=@game.player3 name="game[player3]"
+      .form-group.col
+        label Player 4
+        input.form-control type="text" value=@game.player4 name="game[player4]"
+
+    button.btn.btn-secondary type="submit" value="Save"
+      i.fa.fa-save
+

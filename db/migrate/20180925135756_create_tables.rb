@@ -1,26 +1,24 @@
 class CreateTables < ActiveRecord::Migration[5.2]
   def change
-    create_table :players do |t|
-      t.string :name
-      t.string :email, index: true
-      t.timestamps
-    end
-    create_table :games do |t|
-      t.integer :p1_id, foreign_key: true, index: true
-      t.integer :p2_id, foreign_key: true, index: true
-      t.integer :p3_id, foreign_key: true, index: true
-      t.integer :p4_id, foreign_key: true, index: true
+    enable_extension 'uuid-ossp'
+    create_table :games, id: :uuid, default: -> { "uuid_generate_v4()" } do |t|
+      t.string :owner
+      t.string :player1, null: false
+      t.string :player2, null: false
+      t.string :player3, null: false
+      t.string :player4, null: false
       t.string :name, index: true
       t.timestamps
     end
     create_table :rounds do |t|
-      t.references :game, foreign_key: true, index: true
-      t.integer :s1
-      t.integer :s2
-      t.integer :s3
-      t.integer :s4
+      t.uuid :game_id, index: true
+      t.integer :score1
+      t.integer :score2
+      t.integer :score3
+      t.integer :score4
       t.integer :roundtype
       t.timestamps
     end
+    add_foreign_key :rounds, :games, on_delete: :cascade
   end
 end

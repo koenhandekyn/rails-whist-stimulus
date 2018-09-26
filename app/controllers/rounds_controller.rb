@@ -25,13 +25,17 @@ class RoundsController < ApplicationController
   # POST /rounds.json
   def create
     @round = Round.new(round_params)
-
     respond_to do |format|
       if @round.save
-        format.html { redirect_to @round, notice: 'Round was successfully created.' }
+        format.html { redirect_to game_path(@round.game), notice: 'Round was successfully created.' }
         format.json { render :show, status: :created, location: @round }
       else
-        format.html { render :new }
+        format.html {
+          @game = @round.game
+          @rounds = @game.rounds.order(created_at: :ASC)
+          @rounds_count = @game.rounds.count
+          render 'games/show'
+        }
         format.json { render json: @round.errors, status: :unprocessable_entity }
       end
     end
@@ -40,23 +44,25 @@ class RoundsController < ApplicationController
   # PATCH/PUT /rounds/1
   # PATCH/PUT /rounds/1.json
   def update
+    @round.update!(round_params)
     respond_to do |format|
-      if @round.update(round_params)
-        format.html { redirect_to @round, notice: 'Round was successfully updated.' }
-        format.json { render :show, status: :ok, location: @round }
-      else
-        format.html { render :edit }
-        format.json { render json: @round.errors, status: :unprocessable_entity }
-      end
+      format.html { redirect_to game_path(@round.game), notice: 'Round was successfully updated.' }
+      format.json { render :show, status: :ok, location: @round }
+    end
+  rescue
+    respond_to do |format|
+      format.html { render :edit }
+      format.json { render json: @round.errors, status: :unprocessable_entity }
     end
   end
 
   # DELETE /rounds/1
   # DELETE /rounds/1.json
   def destroy
+    game = @round.game
     @round.destroy
     respond_to do |format|
-      format.html { redirect_to rounds_url, notice: 'Round was successfully destroyed.' }
+      format.html { redirect_to edit_game_path(game), notice: 'Round was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -69,6 +75,6 @@ class RoundsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def round_params
-      params.require(:round).permit(:game_id, :s1, :s2, :s3, :s4, :roundtype)
+      params.require(:round).permit(:game_id, :score1, :score2, :score3, :score4, :roundtype)
     end
 end

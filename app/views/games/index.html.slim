@@ -1,0 +1,32 @@
+nav aria-label="breadcrumb"
+  ol.breadcrumb.bg-transparent
+    li.breadcrumb-item
+      a.active href=root_path
+        i.fa.fa-home
+        ' &nbsp;Whist
+    li.breadcrumb-item.active aria-current="page"
+      a href=games_path Games
+    li.breadcrumb-item.active aria-current="page"
+      = link_to new_game_path do
+        i.fa.fa-plus
+
+.container-fluid
+  - @games.each do |game|
+    .game.card.mt-4
+      .card-header.text-center
+        = link_to game_path(game) do
+          => game.name
+      .card-body
+        / .card-text
+        .row
+          .col.name.text-center class=game.winner1 #{game.player1}
+          .col.name.text-center class=game.winner2 #{game.player2}
+          .col.name.text-center class=game.winner3 #{game.player3}
+          .col.name.text-center class=game.winner4 #{game.player4}
+        .row
+          .col.score.text-center class=game.score_sign1 #{game.score1}
+          .col.score.text-center class=game.score_sign2 #{game.score2}
+          .col.score.text-center class=game.score_sign3 #{game.score3}
+          .col.score.text-center class=game.score_sign4 #{game.score4}
+        / hr
+

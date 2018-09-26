@@ -7,7 +7,14 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
-console.log('Hello World from Webpacker')
+import "@babel/polyfill"
+
+import Rails from "rails-ujs"
+Rails.start()
+
+import Turbolinks from "turbolinks"
+Turbolinks.start()
+Turbolinks.setProgressBarDelay(20)
 
 import { Application } from "stimulus"
 import { definitionsFromContext } from "stimulus/webpack-helpers"

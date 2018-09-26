@@ -1,0 +1,70 @@
+nav aria-label="breadcrumb"
+  ol.breadcrumb.bg-transparent
+    li.breadcrumb-item
+      a.active href=root_path
+        i.fa.fa-home
+        ' &nbsp;Whist
+    li.breadcrumb-item.active aria-current="page"
+      a href=games_path Games
+    li.breadcrumb-item.active aria-current="page"
+      => @game.name
+      => link_to edit_game_path(@game) do
+        i.fa.fa-edit
+
+.container-fluid
+  .form-row
+    .col.text-center
+    .col.text-center =@round.game.player1
+    .col.text-center =@round.game.player2
+    .col.text-center =@round.game.player3
+    .col.text-center =@round.game.player4
+    .col
+
+  hr
+
+  = form_with model: @game do |f|
+    .form-row.total
+      .col.text-center Score
+      .col.score.text-center class=@game.score_sign1 = @game.score1
+      .col.score.text-center class=@game.score_sign2 = @game.score2
+      .col.score.text-center class=@game.score_sign3 = @game.score3
+      .col.score.text-center class=@game.score_sign4 = @game.score4
+      .col
+
+  hr
+
+  = form_with model: @round, local: true do |f|
+    -if @round.errors.any?
+      #error_explanation
+        ul
+          - @round.errors.full_messages.each do |msg|
+            li= msg
+    input type="hidden" value=@game.id name="round[game_id]"
+    .form-row
+      .col.text-center
+      .col.text-center: input.score.form-control type="number" value=@round.score1 name="round[score1]" onClick="this.select();"
+      .col.text-center: input.score.form-control type="number" value=@round.score2 name="round[score2]" onClick="this.select();"
+      .col.text-center: input.score.form-control type="number" value=@round.score3 name="round[score3]" onClick="this.select();"
+      .col.text-center: input.score.form-control type="number" value=@round.score4 name="round[score4]" onClick="this.select();"
+      .col: button.btn.btn-secondary type="submit" value="Save"
+        i.fa.fa-save
+
+  hr
+
+  - if @rounds_count == 0
+    p Enter your first round score
+  - else
+    - @rounds.each_with_index.reverse_each do |round, index|
+      .form-row
+        .col.text-right ##{index+1}
+        .col.score.text-center class=round.score_sign1 = round.score1
+        .col.score.text-center class=round.score_sign2 = round.score2
+        .col.score.text-center class=round.score_sign3 = round.score3
+        .col.score.text-center class=round.score_sign4 = round.score4
+        .col
+          => link_to edit_round_path(round) do
+              i.fa.fa-edit
+
+  hr
+  a.btn.btn-danger href=game_path(@game) data-confirm="Are you sure?" data-method="delete"
+    i.fa.fa-trash

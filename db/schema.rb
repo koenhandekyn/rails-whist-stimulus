@@ -14,41 +14,31 @@ ActiveRecord::Schema.define(version: 2018_09_25_135756) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
-  create_table "games", force: :cascade do |t|
-    t.integer "p1_id"
-    t.integer "p2_id"
-    t.integer "p3_id"
-    t.integer "p4_id"
+  create_table "games", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
+    t.string "owner"
+    t.string "player1", null: false
+    t.string "player2", null: false
+    t.string "player3", null: false
+    t.string "player4", null: false
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_games_on_name"
-    t.index ["p1_id"], name: "index_games_on_p1_id"
-    t.index ["p2_id"], name: "index_games_on_p2_id"
-    t.index ["p3_id"], name: "index_games_on_p3_id"
-    t.index ["p4_id"], name: "index_games_on_p4_id"
-  end
-
-  create_table "players", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_players_on_email"
   end
 
   create_table "rounds", force: :cascade do |t|
-    t.bigint "game_id"
-    t.integer "s1"
-    t.integer "s2"
-    t.integer "s3"
-    t.integer "s4"
+    t.uuid "game_id"
+    t.integer "score1"
+    t.integer "score2"
+    t.integer "score3"
+    t.integer "score4"
     t.integer "roundtype"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["game_id"], name: "index_rounds_on_game_id"
   end
 
-  add_foreign_key "rounds", "games"
+  add_foreign_key "rounds", "games", on_delete: :cascade
 end
