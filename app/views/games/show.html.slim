@@ -11,6 +11,8 @@ nav aria-label="breadcrumb"
       => link_to edit_game_path(@game) do
         i.fa.fa-edit
 
+.hidden
+
 .container-fluid
   .form-row
     .col.text-center
@@ -22,18 +24,18 @@ nav aria-label="breadcrumb"
 
   hr
 
-  = form_with model: @game do |f|
-    .form-row.total
-      .col.text-center Score
-      .col.score.text-center class=@game.score_sign1 = @game.score1
-      .col.score.text-center class=@game.score_sign2 = @game.score2
-      .col.score.text-center class=@game.score_sign3 = @game.score3
-      .col.score.text-center class=@game.score_sign4 = @game.score4
-      .col
+  / = form_with model: @game do |f|
+  .form-row.total data-controller="hello" data-hello-game-id=@game.id
+    .col.text-center Score
+    .col.score.text-center class=@game.score_sign1 = @game.score1
+    .col.score.text-center class=@game.score_sign2 = @game.score2
+    .col.score.text-center class=@game.score_sign3 = @game.score3
+    .col.score.text-center class=@game.score_sign4 = @game.score4
+    .col
 
   hr
 
-  = form_with model: @round, local: true do |f|
+  = form_with model: @round do |f|
     -if @round.errors.any?
       #error_explanation
         ul

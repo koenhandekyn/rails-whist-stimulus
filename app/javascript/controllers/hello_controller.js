@@ -1,18 +1,21 @@
-// Visit The Stimulus Handbook for more details 
-// https://stimulusjs.org/handbook/introduction
-// 
-// This example controller works with specially annotated HTML like:
-//
-// <div data-controller="hello">
-//   <h1 data-target="hello.output"></h1>
-// </div>
-
+import cable from "actioncable";
 import { Controller } from "stimulus"
 
-export default class extends Controller {
-  static targets = [ "output" ]
+const consumer = cable.createConsumer()
 
+const callback = (outputTarget) => { return {
+    received({ message, scores }) {
+      // todo update scores
+      // refresh rounds
+      console.log( scores )
+    }
+  }
+}
+
+export default class extends Controller {
   connect() {
-    this.outputTarget.textContent = 'Hello, Stimulus!'
+    const game_id = this.data.get('game-id');
+    const channel = { channel: "ScoreChannel", game_id: game_id }
+    const chat = consumer.subscriptions.create( channel, callback(this.outputTarget) );
   }
 }

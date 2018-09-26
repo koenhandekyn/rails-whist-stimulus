@@ -27,7 +27,11 @@ class RoundsController < ApplicationController
     @round = Round.new(round_params)
     respond_to do |format|
       if @round.save
-        format.html { redirect_to game_path(@round.game), notice: 'Round was successfully created.' }
+        format.html {
+          message = { scores: @round.game.scores }
+          ActionCable.server.broadcast("game/#{@round.game.id}", message )
+          redirect_to game_path(@round.game), notice: 'Round was successfully created.'
+        }
         format.json { render :show, status: :created, location: @round }
       else
         format.html {

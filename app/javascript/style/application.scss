@@ -1,69 +1,19 @@
-// Brand Colors
-$blue: #007bff;
-$indigo: #6610f2;
-$purple: #6f42c1;
-$pink: #e83e8c;
-$red: #dc3545;
-$orange: #fd7e14;
-$yellow: #ffc107;
-$green: #28a745;
-$teal: #20c997;
-$cyan: #17a2b8;
-$white: #fff;
-$gray-100: #f8f9fa;
-$gray-200: #e9ecef;
-$gray-300: #dee2e6;
-$gray-400: #ced4da;
-$gray-500: #adb5bd;
-$gray-600: #868e96;
-$gray-700: #495057;
-$gray-800: #343a40;
-$gray-900: #212529;
-$black: #000;
-$theme-colors: (primary: $yellow, secondary: $teal, success: $green, info: $cyan, warning: $orange, danger: $red, light: $gray-100, dark: $gray-800);
-$theme-color-interval: 8%;
+@import "variables";
 
-// Body
-$body-bg: darken($green, 30%);
-$body-color: $teal;
-
-$hr-border-color: $yellow;
-$hr-border-width: 4px !default;
-
-$card-border-width: 8px;
-$card-border-radius: 32px;
-$card-border-color: $body-bg;
-$card-cap-bg: darken($green, 10%);
-$card-bg: darken($green, 20%);
-
-// $card-img-overlay-padding:          1.25rem !default;
-
-// $card-group-margin:                 ($grid-gutter-width / 2) !default;
-// $card-deck-margin:                  $card-group-margin !default;
-
-// $card-columns-count:                3 !default;
-$card-columns-gap:                  2.25rem !default;
-$card-columns-margin:               3em !default;
-
-@import "node_modules/bootstrap/scss/bootstrap";
-
-body {
+.container-fluid {
+  max-width: 40em;
 }
 
 .total {
-  // color: $yellow;
   font-weight: bold;
 }
 
 .form-row {
   margin-bottom: 0.25em;
 }
+
 input.score {
   text-align: center;
-}
-
-.container-fluid {
-  max-width: 40em;
 }
 
 .score.neg {
@@ -89,5 +39,4 @@ input.score {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  // max-width: 15%
 }
