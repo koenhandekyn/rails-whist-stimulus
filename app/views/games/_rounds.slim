@@ -1,0 +1,13 @@
+- if rounds_count == 0
+  p Enter your first round score
+- else
+  - rounds.each_with_index.reverse_each do |round, index|
+    .form-row
+      .col.text-right ##{index+1}
+      .col.score.text-center class=round.score_sign1 = round.score1
+      .col.score.text-center class=round.score_sign2 = round.score2
+      .col.score.text-center class=round.score_sign3 = round.score3
+      .col.score.text-center class=round.score_sign4 = round.score4
+      .col
+        => link_to edit_round_path(round) do
+            i.fa.fa-edit
