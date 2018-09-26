@@ -3,7 +3,6 @@ nav aria-label="breadcrumb"
     li.breadcrumb-item
       a.active href=root_path
         i.fa.fa-home
-        ' &nbsp;Whist
     li.breadcrumb-item.active aria-current="page"
       a href=games_path Games
     li.breadcrumb-item.active aria-current="page"
@@ -11,9 +10,7 @@ nav aria-label="breadcrumb"
       => link_to edit_game_path(@game) do
         i.fa.fa-edit
 
-.hidden
-
-.container-fluid
+.container-fluid data-controller="game" data-game-id=@game.id
   .form-row
     .col.text-center
     .col.text-center =@round.game.player1
@@ -24,18 +21,17 @@ nav aria-label="breadcrumb"
 
   hr
 
-  / = form_with model: @game do |f|
-  .form-row.total data-controller="hello" data-hello-game-id=@game.id
+  .form-row.total
     .col.text-center Score
-    .col.score.text-center class=@game.score_sign1 = @game.score1
-    .col.score.text-center class=@game.score_sign2 = @game.score2
-    .col.score.text-center class=@game.score_sign3 = @game.score3
-    .col.score.text-center class=@game.score_sign4 = @game.score4
+    .col.score.text-center data-target="game.score1" class=@game.score_sign1 = @game.score1
+    .col.score.text-center data-target="game.score2" class=@game.score_sign2 = @game.score2
+    .col.score.text-center data-target="game.score3" class=@game.score_sign3 = @game.score3
+    .col.score.text-center data-target="game.score4" class=@game.score_sign4 = @game.score4
     .col
 
   hr
 
-  = form_with model: @round do |f|
+  = form_with model: @round, data: { target: "game.roundForm" } do |f|
     -if @round.errors.any?
       #error_explanation
         ul
@@ -53,19 +49,8 @@ nav aria-label="breadcrumb"
 
   hr
 
-  - if @rounds_count == 0
-    p Enter your first round score
-  - else
-    - @rounds.each_with_index.reverse_each do |round, index|
-      .form-row
-        .col.text-right ##{index+1}
-        .col.score.text-center class=round.score_sign1 = round.score1
-        .col.score.text-center class=round.score_sign2 = round.score2
-        .col.score.text-center class=round.score_sign3 = round.score3
-        .col.score.text-center class=round.score_sign4 = round.score4
-        .col
-          => link_to edit_round_path(round) do
-              i.fa.fa-edit
+  .rounds data-target="game.rounds"
+    == render 'rounds', rounds: @rounds, rounds_count: @rounds_count
 
   hr
   a.btn.btn-danger href=game_path(@game) data-confirm="Are you sure?" data-method="delete"

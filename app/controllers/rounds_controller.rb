@@ -28,8 +28,10 @@ class RoundsController < ApplicationController
     respond_to do |format|
       if @round.save
         format.html {
-          message = { scores: @round.game.scores }
-          ActionCable.server.broadcast("game/#{@round.game.id}", message )
+          rounds = @round.game.rounds.order(created_at: :ASC)
+          rounds_count = @round.game.rounds.count
+          rounds_html = ApplicationController.render(partial: 'games/rounds', locals: { rounds: rounds, rounds_count: rounds_count })
+          ActionCable.server.broadcast("game/#{@round.game.id}", { message: 'scores', scores: @round.game.scores, rounds_html: rounds_html } )
           redirect_to game_path(@round.game), notice: 'Round was successfully created.'
         }
         format.json { render :show, status: :created, location: @round }

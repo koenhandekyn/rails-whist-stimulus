@@ -1,5 +1,6 @@
 class ScoreChannel < ApplicationCable::Channel
   def subscribed
+    puts "subscribed to game/#{params[:game_id]}"
     stream_from "game/#{params[:game_id]}"
   end
 
