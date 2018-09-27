@@ -26,40 +26,21 @@ class RoundsController < ApplicationController
   # POST /rounds.json
   def create
     @round = Round.new(round_params)
-    respond_to do |format|
-      if @round.save
-        # notify all listeners of updated scores and rounds
-        rounds = @round.game.rounds.order(created_at: :ASC)
-        rounds_count = @round.game.rounds.count
-        rounds_html = ApplicationController.render(partial: 'games/rounds', locals: { rounds: rounds, rounds_count: rounds_count })
-        ActionCable.server.broadcast("game/#{@round.game.id}", { message: 'scores', scores: @round.game.scores, rounds_html: rounds_html } )
-        format.js { redirect_to game_path(@round.game) }
-        # format.html { redirect_to game_path(@round.game), notice: 'Round was successfully created.' }
-      else
-        format.js { render layout: false, status: :bad_request }
-        # format.html {
-        #   @game = @round.game
-        #   @rounds = @game.rounds.order(created_at: :ASC)
-        #   @rounds_count = @game.rounds.count
-        #   render 'games/show'
-        # }
-      end
-    end
+    @round.save!
+    notify_clients
+    head :ok
+  rescue
+    render layout: false, status: :bad_request
   end
 
   # PATCH/PUT /rounds/1
   # PATCH/PUT /rounds/1.json
   def update
     @round.update!(round_params)
-    respond_to do |format|
-      format.js { redirect_to game_path(@round.game) }
-      # format.html { redirect_to game_path(@round.game), notice: 'Round was successfully updated.' }
-    end
+    notify_clients
+    redirect_to game_path(@round.game) # with turbolinks
   rescue
-    respond_to do |format|
-      format.js { render layout: false, status: :bad_request }
-      # format.html { render :edit }
-    end
+    render layout: false, status: :bad_request
   end
 
   # DELETE /rounds/1
@@ -71,6 +52,14 @@ class RoundsController < ApplicationController
   end
 
   private
+
+    def notify_clients
+      rounds = @round.game.rounds.order(created_at: :ASC)
+      rounds_count = @round.game.rounds.count
+      rounds_html = ApplicationController.render(partial: 'games/rounds', locals: { rounds: rounds, rounds_count: rounds_count })
+      ActionCable.server.broadcast("game/#{@round.game.id}", { message: 'scores', scores: @round.game.scores, rounds_html: rounds_html } )
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_round
       @round = Round.find(params[:id])

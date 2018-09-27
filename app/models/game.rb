@@ -77,4 +77,20 @@ class Game < ApplicationRecord
   def max_score
     scores.compact.max
   end
+
+  #####################
+
+  def self.new_from_ip(ip)
+    Game.new(player1: Faker::Name.first_name,
+             player2: Faker::Name.first_name,
+             player3: Faker::Name.first_name,
+             player4: Faker::Name.first_name,
+             name: name_from_ip(ip))
+  end
+
+  def self.name_from_ip(ip)
+    response = HTTParty.get("http://api.ipstack.com/#{ip}?access_key=2d186e4c34beb6881385a1a65698f023")
+    location = "#{response["city"]}/#{response["country_name"]}" if response["city"]
+    "#{location}@#{Time.zone.now.to_date.to_s(:short)}"
+  end
 end

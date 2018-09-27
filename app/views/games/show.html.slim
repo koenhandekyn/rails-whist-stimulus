@@ -32,11 +32,11 @@ nav aria-label="breadcrumb"
   hr
 
   = form_with model: @round, data: { target: "game.roundForm" } do |f|
-    -if @round.errors.any?
-      #error_explanation
-        ul
-          - @round.errors.full_messages.each do |msg|
-            li= msg
+    / -if @round.errors.any?
+    /   #error_explanation
+    /     ul
+    /       - @round.errors.full_messages.each do |msg|
+    /         li= msg
     input type="hidden" value=@game.id name="round[game_id]"
     .form-row
       .col.text-center
@@ -44,7 +44,7 @@ nav aria-label="breadcrumb"
       .col.text-center: input.score.form-control type="number" value=@round.score2 name="round[score2]" onClick="this.select();"
       .col.text-center: input.score.form-control type="number" value=@round.score3 name="round[score3]" onClick="this.select();"
       .col.text-center: input.score.form-control type="number" value=@round.score4 name="round[score4]" onClick="this.select();"
-      .col: button.btn.btn-secondary type="submit" value="Save"
+      .col: button.btn.btn-secondary type="submit" value="Save" data-disable-with="..."
         i.fa.fa-save
 
   hr

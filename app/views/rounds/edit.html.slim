@@ -9,22 +9,15 @@ nav aria-label="breadcrumb"
       => link_to @round.game.name, game_path(@round.game)
     li.breadcrumb-item.active aria-current="page" Edit Round
 
-= form_for @round do |f|
-  -if @round.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(@round.errors.count, "error")} prohibited this round from being saved:"
-      ul
-        - @round.errors.full_messages.each do |msg|
-          li= msg
+.form-row
+  .col
+  .col =@round.game.player1
+  .col =@round.game.player2
+  .col =@round.game.player3
+  .col =@round.game.player4
+  .col
 
-  .form-row
-    .col
-    .col =@round.game.player1
-    .col =@round.game.player2
-    .col =@round.game.player3
-    .col =@round.game.player4
-    .col
-
+= form_with model: @round do |f|
   .form-row
     .col
     .col: input.form-control type="number" value=@round.score1 name="round[score1]" onClick="this.select();"
