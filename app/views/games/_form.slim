@@ -1,12 +1,5 @@
 .container-fluid
   = form_with model: @game do |f|
-    -if @game.errors.any?
-      #error_explanation
-        h2 = "#{pluralize(@game.errors.count, "error")} prohibited this game from being saved:"
-        ul
-          - @game.errors.full_messages.each do |msg|
-            li= msg
-
     .form-row
       .form-group.col
         label Name
@@ -25,6 +18,6 @@
         label Player 4
         input.form-control type="text" value=@game.player4 name="game[player4]"
 
-    button.btn.btn-secondary type="submit" value="Save"
+    button.btn.btn-secondary type="submit" value="Save" data-disable-with="..."
       i.fa.fa-save
 
