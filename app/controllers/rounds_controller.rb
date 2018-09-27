@@ -4,17 +4,18 @@ class RoundsController < ApplicationController
   # GET /rounds
   # GET /rounds.json
   def index
-    @rounds = Round.all
+    raise "not supported"
   end
 
   # GET /rounds/1
   # GET /rounds/1.json
   def show
+    raise "not supported"
   end
 
   # GET /rounds/new
   def new
-    @round = Round.new
+    raise "not supported"
   end
 
   # GET /rounds/1/edit
@@ -27,22 +28,21 @@ class RoundsController < ApplicationController
     @round = Round.new(round_params)
     respond_to do |format|
       if @round.save
-        format.html {
-          rounds = @round.game.rounds.order(created_at: :ASC)
-          rounds_count = @round.game.rounds.count
-          rounds_html = ApplicationController.render(partial: 'games/rounds', locals: { rounds: rounds, rounds_count: rounds_count })
-          ActionCable.server.broadcast("game/#{@round.game.id}", { message: 'scores', scores: @round.game.scores, rounds_html: rounds_html } )
-          redirect_to game_path(@round.game), notice: 'Round was successfully created.'
-        }
-        format.json { render :show, status: :created, location: @round }
+        # notify all listeners of updated scores and rounds
+        rounds = @round.game.rounds.order(created_at: :ASC)
+        rounds_count = @round.game.rounds.count
+        rounds_html = ApplicationController.render(partial: 'games/rounds', locals: { rounds: rounds, rounds_count: rounds_count })
+        ActionCable.server.broadcast("game/#{@round.game.id}", { message: 'scores', scores: @round.game.scores, rounds_html: rounds_html } )
+        format.js { redirect_to game_path(@round.game) }
+        # format.html { redirect_to game_path(@round.game), notice: 'Round was successfully created.' }
       else
-        format.html {
-          @game = @round.game
-          @rounds = @game.rounds.order(created_at: :ASC)
-          @rounds_count = @game.rounds.count
-          render 'games/show'
-        }
-        format.json { render json: @round.errors, status: :unprocessable_entity }
+        format.js { render layout: false, status: :bad_request }
+        # format.html {
+        #   @game = @round.game
+        #   @rounds = @game.rounds.order(created_at: :ASC)
+        #   @rounds_count = @game.rounds.count
+        #   render 'games/show'
+        # }
       end
     end
   end
@@ -52,13 +52,13 @@ class RoundsController < ApplicationController
   def update
     @round.update!(round_params)
     respond_to do |format|
-      format.html { redirect_to game_path(@round.game), notice: 'Round was successfully updated.' }
-      format.json { render :show, status: :ok, location: @round }
+      format.js { redirect_to game_path(@round.game) }
+      # format.html { redirect_to game_path(@round.game), notice: 'Round was successfully updated.' }
     end
   rescue
     respond_to do |format|
-      format.html { render :edit }
-      format.json { render json: @round.errors, status: :unprocessable_entity }
+      format.js { render layout: false, status: :bad_request }
+      # format.html { render :edit }
     end
   end
 
@@ -67,10 +67,7 @@ class RoundsController < ApplicationController
   def destroy
     game = @round.game
     @round.destroy
-    respond_to do |format|
-      format.html { redirect_to edit_game_path(game), notice: 'Round was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to edit_game_path(game), notice: 'Round was successfully destroyed.'
   end
 
   private

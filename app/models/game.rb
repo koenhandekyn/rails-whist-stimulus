@@ -16,6 +16,12 @@
 class Game < ApplicationRecord
   has_many :rounds # cascade delete done in database
 
+  validates :name, presence: true
+  validates :player1, presence: true
+  validates :player2, presence: true
+  validates :player3, presence: true
+  validates :player4, presence: true
+
   def score1
     rounds.sum(:score1)
   end

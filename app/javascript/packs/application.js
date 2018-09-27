@@ -25,5 +25,3 @@ application.load(definitionsFromContext(context))
 
 import "style/framework.scss"
 import "style/application.scss"
-
-// import "src/action_cable_client"

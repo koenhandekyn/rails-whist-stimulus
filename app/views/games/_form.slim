@@ -1,5 +1,5 @@
 .container-fluid
-  = form_with model: @game, local: true do |f|
+  = form_with model: @game do |f|
     -if @game.errors.any?
       #error_explanation
         h2 = "#{pluralize(@game.errors.count, "error")} prohibited this game from being saved:"
