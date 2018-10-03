@@ -13,10 +13,10 @@ nav aria-label="breadcrumb"
 .container-fluid data-controller="game" data-game-id=@game.id
   .form-row
     .col.text-center
-    .col.text-center =@round.game.player1
-    .col.text-center =@round.game.player2
-    .col.text-center =@round.game.player3
-    .col.text-center =@round.game.player4
+    .col.name.text-center class=@game.winner1 =@game.player1
+    .col.name.text-center class=@game.winner2 =@game.player2
+    .col.name.text-center class=@game.winner3 =@game.player3
+    .col.name.text-center class=@game.winner4 =@game.player4
     .col
 
   hr

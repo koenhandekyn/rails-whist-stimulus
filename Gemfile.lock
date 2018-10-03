@@ -1,4 +1,10 @@
 GIT
+  remote: https://github.com/koenhandekyn/turbolinks-rails.git
+  revision: 7fff07cb5031d3cfb3c6348350f930f2b507bb49
+  specs:
+    turbolinks-rails (5.2.0)
+
+GIT
   remote: https://github.com/rails/rails.git
   revision: a549787fddbd1f14142967a58ecdf525f5207408
   branch: 5-2-stable
@@ -96,9 +102,6 @@ GEM
     ffi (1.9.25)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
-    hpricot (0.8.6)
-    html2slim (0.2.0)
-      hpricot
     httparty (0.16.2)
       multi_xml (>= 0.5.2)
     i18n (1.1.0)
@@ -163,9 +166,6 @@ GEM
     thor (0.20.0)
     thread_safe (0.3.6)
     tilt (2.0.8)
-    turbolinks (5.2.0)
-      turbolinks-source (~> 5.2)
-    turbolinks-source (5.2.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     webpacker (3.5.5)
@@ -185,7 +185,6 @@ DEPENDENCIES
   bootstrap_form (>= 4.0.0.alpha1)
   byebug
   faker
-  html2slim
   httparty
   pg (>= 0.18, < 2.0)
   puma (~> 3.11)
@@ -195,7 +194,7 @@ DEPENDENCIES
   slim-rails
   spring
   spring-watcher-listen (~> 2.0.0)
-  turbolinks
+  turbolinks-rails!
   tzinfo-data
   web-console!
   webpacker
