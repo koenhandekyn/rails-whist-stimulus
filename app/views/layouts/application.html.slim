@@ -2,17 +2,15 @@ doctype html
 html
   head
     title Whist
-    = csrf_meta_tags
-    = csp_meta_tag
-    = stylesheet_pack_tag 'application', async: true
-    = javascript_pack_tag 'application', async: true
-    = action_cable_meta_tag
     meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes"
     meta name="mobile-web-app-capable" content="yes"
     meta name="apple-mobile-web-app-capable" content="yes"
     link rel="manifest" href="/manifest.webmanifest"
     link rel="shortcut icon" type="image/png" href="/whist.png"
     link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous"
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_pack_tag 'application', async: true
   body
     = yield
     .container-fluid
@@ -20,3 +18,5 @@ html
         dl
           - flash.each do |k, v|
             dd title=k =v
+    = javascript_pack_tag 'application', async: true
+    = action_cable_meta_tag

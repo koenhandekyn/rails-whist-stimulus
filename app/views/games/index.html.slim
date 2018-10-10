@@ -1,15 +1,15 @@
-nav aria-label="breadcrumb"
-  ol.breadcrumb.bg-transparent
-    li.breadcrumb-item
-      a.active href=root_path
-        i.fa.fa-home
-    li.breadcrumb-item.active aria-current="page"
-      a href=games_path Games
-    li.breadcrumb-item.active aria-current="page"
-      = link_to new_game_path do
-        i.fa.fa-plus
-
 .container-fluid
+  nav.row aria-label="breadcrumb"
+    ol.breadcrumb.bg-transparent
+      li.breadcrumb-item
+        a.active href=root_path
+          i.fa.fa-home
+      li.breadcrumb-item.active aria-current="page"
+        a href=games_path Games
+      li.breadcrumb-item.active aria-current="page"
+        = link_to new_game_path do
+          i.fa.fa-plus
+
   - @games.each do |game|
     .game.card.mt-4
       .card-header.text-center
