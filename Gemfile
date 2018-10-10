@@ -7,7 +7,6 @@ gem 'rails', github: "rails/rails", branch: "5-2-stable"
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.11'
 gem 'webpacker'
-# gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'slim'
 gem 'httparty'
@@ -15,6 +14,7 @@ gem 'bootstrap_form', '>= 4.0.0.alpha1'
 gem 'faker'
 gem 'redis'
 gem 'turbolinks-rails', github: "koenhandekyn/turbolinks-rails" # needed for redirect patch
+# gem 'jbuilder', '~> 2.5'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -25,10 +25,10 @@ end
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', github: 'rails/web-console'
-  # gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
-  gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'slim-rails'
+  gem 'listen', '>= 3.0.5', '< 3.2'
+  # gem 'spring-watcher-listen', '~> 2.0.0'
   # gem 'html2slim'
 end
 
