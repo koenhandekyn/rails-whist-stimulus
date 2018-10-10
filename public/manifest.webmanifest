@@ -1,0 +1,13 @@
+{
+  "name": "Whist Score Keeper",
+  "short_name": "Whist",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#28a745",
+  "description": "A Whist Score Keeper application",
+  "icons": [{
+    "src": "/whist.png",
+    "sizes": "517x517",
+    "type": "image/png"
+  }]
+}
